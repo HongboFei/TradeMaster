@@ -41,8 +41,12 @@ RUN git clone https://github.com/NVIDIA/apex
 WORKDIR apex
 RUN ls /opt/conda/envs/
 RUN conda run -n TradeMaster python -c "import torch; print(torch.__version__)"
+RUN conda run -n TradeMaster pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
+RUN conda run -n TradeMaster python -c "import torch; print(torch.__version__)"
+RUN conda run -n TradeMaster python -m pip install -v --no-cache-dir .
+
 # RUN conda run -n TradeMaster python -m pip install -v --no-cache-dir .
-RUN conda run -n TradeMaster /opt/conda/envs/TradeMaster/bin/python -m pip install -v --no-cache-dir .
+# RUN conda run -n TradeMaster /opt/conda/envs/TradeMaster/bin/python -m pip install -v --no-cache-dir .
 
 
 # RUN /opt/conda/envs/TradeMaster/bin/python -m pip install -v --no-cache-dir .
