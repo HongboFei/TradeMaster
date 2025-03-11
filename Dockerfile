@@ -40,7 +40,10 @@ RUN /opt/conda/envs/TradeMaster/bin/python -m pip install packaging
 RUN git clone https://github.com/NVIDIA/apex
 WORKDIR apex
 RUN ls /opt/conda/envs/
-RUN conda run -n TradeMaster python -m pip install -v --no-cache-dir .
+RUN conda run -n TradeMaster python -c "import torch; print(torch.__version__)"
+# RUN conda run -n TradeMaster python -m pip install -v --no-cache-dir .
+RUN conda run -n TradeMaster /opt/conda/envs/TradeMaster/bin/python -m pip install -v --no-cache-dir .
+
 
 # RUN /opt/conda/envs/TradeMaster/bin/python -m pip install -v --no-cache-dir .
 
