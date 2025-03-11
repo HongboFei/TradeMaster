@@ -26,12 +26,12 @@ RUN curl -o ~/miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-latest
 ENV PATH /opt/conda/bin:$PATH
 RUN conda update -n base -c defaults conda -y
 
-# Create and activate TradeMaster environment
-RUN conda create --name TradeMaster python=3.10 conda -y
+# Create Conda Environment Explicitly
+RUN conda create --prefix /opt/conda/envs/TradeMaster python=3.10 -y
 
-# Ensure Conda is activated when using shell
+# Ensure Conda Activation Works
 SHELL ["/bin/bash", "-c"]
-RUN echo "source activate TradeMaster" >> ~/.bashrc
+RUN echo "source /opt/conda/bin/activate TradeMaster" >> ~/.bashrc
 RUN echo "conda activate TradeMaster" >> ~/.bashrc
 ENV CONDA_DEFAULT_ENV TradeMaster
 ENV PATH /opt/conda/envs/TradeMaster/bin:$PATH
@@ -42,7 +42,7 @@ RUN git clone https://github.com/TradeMaster-NTU/TradeMaster.git
 WORKDIR /home/TradeMaster
 
 # Install PyTorch with CUDA 12
-RUN conda install -n TradeMaster -y \
+RUN /opt/conda/bin/conda run -n TradeMaster conda install -y \
     pytorch \
     torchvision \
     torchaudio \
@@ -52,12 +52,12 @@ RUN conda install -n TradeMaster -y \
 WORKDIR /home
 RUN git clone https://github.com/NVIDIA/apex
 WORKDIR /home/apex
-RUN pip install packaging
-RUN pip install -v --no-cache-dir .
+RUN /opt/conda/bin/conda run -n TradeMaster pip install packaging
+RUN /opt/conda/bin/conda run -n TradeMaster pip install -v --no-cache-dir .
 
 # Install TradeMaster dependencies
 WORKDIR /home/TradeMaster
-RUN pip install -r requirements.txt
+RUN /opt/conda/bin/conda run -n TradeMaster pip install -r requirements.txt
 
 # Set default working directory
 WORKDIR /home/TradeMaster
