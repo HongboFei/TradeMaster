@@ -23,18 +23,20 @@ RUN curl -o ~/miniconda.sh https://repo.anaconda.com/miniconda/Miniconda3-latest
     rm ~/miniconda.sh 
 
 # Set environment variables for Conda
-ENV PATH /opt/conda/bin:$PATH
-RUN conda update -n base -c defaults conda -y
+ENV PATH="/opt/conda/bin:$PATH"
 
-# Create Conda Environment Explicitly
-RUN conda create --prefix /opt/conda/envs/TradeMaster python=3.10 -y
+# Create and activate Conda environment
+RUN conda update -n base -c defaults conda -y && \
+    conda create --prefix /opt/conda/envs/TradeMaster python=3.10 -y
 
-# Ensure Conda Activation Works
+# Use bash shell so conda activation works
 SHELL ["/bin/bash", "-c"]
+
+# Activate Conda in bashrc
 RUN echo "source /opt/conda/bin/activate TradeMaster" >> ~/.bashrc
 RUN echo "conda activate TradeMaster" >> ~/.bashrc
-ENV CONDA_DEFAULT_ENV TradeMaster
-ENV PATH /opt/conda/envs/TradeMaster/bin:$PATH
+ENV CONDA_DEFAULT_ENV=TradeMaster
+ENV PATH="/opt/conda/envs/TradeMaster/bin:$PATH"
 
 # Clone TradeMaster repository
 WORKDIR /home
@@ -42,22 +44,27 @@ RUN git clone https://github.com/TradeMaster-NTU/TradeMaster.git
 WORKDIR /home/TradeMaster
 
 # Install PyTorch with CUDA 12
-RUN /opt/conda/bin/conda run -n TradeMaster conda install -y \
+RUN conda run -n TradeMaster conda install -y \
     pytorch \
     torchvision \
     torchaudio \
     pytorch-cuda=12.1 -c pytorch -c nvidia
 
+# Verify PyTorch Installation
+RUN conda run -n TradeMaster python -c "import torch; print('Torch Version:', torch.__version__)"
+
 # Install NVIDIA Apex
 WORKDIR /home
 RUN git clone https://github.com/NVIDIA/apex
 WORKDIR /home/apex
-RUN /opt/conda/bin/conda run -n TradeMaster pip install packaging
-RUN /opt/conda/bin/conda run -n TradeMaster pip install -v --no-cache-dir .
+
+# Install Apex with no build isolation
+RUN conda run -n TradeMaster pip install packaging
+RUN conda run -n TradeMaster pip install -v --no-cache-dir --no-build-isolation .
 
 # Install TradeMaster dependencies
 WORKDIR /home/TradeMaster
-RUN /opt/conda/bin/conda run -n TradeMaster pip install -r requirements.txt
+RUN conda run -n TradeMaster pip install -r requirements.txt
 
 # Set default working directory
 WORKDIR /home/TradeMaster
