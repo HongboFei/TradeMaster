@@ -50,7 +50,7 @@ RUN conda run -n TradeMaster pip install -v --no-cache-dir --no-build-isolation 
 
 # Upgrade pip, setuptools, wheel & Install Gym + Optuna in One Step
 RUN conda run -n TradeMaster pip install --upgrade pip setuptools wheel && \
-    conda run -n TradeMaster pip install gym==0.26.2 optuna
+    conda run -n TradeMaster pip install gym==0.21.0 optuna
 
 # Verify Gym Installation
 RUN conda run -n TradeMaster python -c "import gym; print('Gym Version:', gym.__version__)"
