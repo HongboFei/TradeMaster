@@ -1,7 +1,7 @@
 Flask
 Flask-Cors
 mmcv==1.7.1
-git+https://github.com/optuna/optuna.git
+optuna
 prettytable
 plotly
 psutil
@@ -15,7 +15,6 @@ matplotlib
 statsmodels
 scikit_learn
 tslearn
-# gym>=0.26.2
 gymnasium
 ray[rllib]==1.13.0
 tensorflow==2.11.0
