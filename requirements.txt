@@ -1,7 +1,6 @@
 Flask
 Flask-Cors
 mmcv==1.7.1
-optuna
 prettytable
 plotly
 psutil
