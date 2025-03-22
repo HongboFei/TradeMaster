@@ -3,17 +3,8 @@ FROM nvidia/cuda:12.8.0-cudnn-devel-ubuntu20.04
 
 # Install essential dependencies
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
-    ca-certificates \
-    cmake \
-    git \
-    curl \
-    libopenmpi-dev \
-    python3-dev \
-    zlib1g-dev \
-    libgl1-mesa-glx \
-    libglib2.0-0 \
-    libgtk2.0-dev \
-    swig && \
+    ca-certificates cmake git curl libopenmpi-dev python3-dev zlib1g-dev \
+    libgl1-mesa-glx libglib2.0-0 libgtk2.0-dev swig && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Miniconda
@@ -32,9 +23,7 @@ RUN conda update -n base -c defaults conda -y && \
 # Use bash shell so conda activation works
 SHELL ["/bin/bash", "-c"]
 
-# Activate Conda in bashrc
-RUN echo "source /opt/conda/bin/activate TradeMaster" >> ~/.bashrc
-RUN echo "conda activate TradeMaster" >> ~/.bashrc
+# Set Conda environment variables
 ENV CONDA_DEFAULT_ENV=TradeMaster
 ENV PATH="/opt/conda/envs/TradeMaster/bin:$PATH"
 
@@ -45,10 +34,7 @@ WORKDIR /home/TradeMaster
 
 # Install PyTorch with CUDA 12
 RUN conda run -n TradeMaster conda install -y \
-    pytorch \
-    torchvision \
-    torchaudio \
-    pytorch-cuda=12.1 -c pytorch -c nvidia
+    pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
 
 # Verify PyTorch Installation
 RUN conda run -n TradeMaster python -c "import torch; print('Torch Version:', torch.__version__)"
@@ -61,6 +47,13 @@ WORKDIR /home/apex
 # Install Apex with no build isolation
 RUN conda run -n TradeMaster pip install packaging
 RUN conda run -n TradeMaster pip install -v --no-cache-dir --no-build-isolation .
+
+# Upgrade pip, setuptools, wheel & Install Gym + Optuna in One Step
+RUN conda run -n TradeMaster pip install --upgrade pip setuptools wheel && \
+    conda run -n TradeMaster pip install gym==0.26.2 optuna
+
+# Verify Gym Installation
+RUN conda run -n TradeMaster python -c "import gym; print('Gym Version:', gym.__version__)"
 
 # Install TradeMaster dependencies
 WORKDIR /home/TradeMaster
