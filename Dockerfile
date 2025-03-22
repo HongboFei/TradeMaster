@@ -49,9 +49,9 @@ RUN conda run -n TradeMaster pip install packaging
 RUN conda run -n TradeMaster pip install -v --no-cache-dir --no-build-isolation .
 
 # Install gym Without setup.py Execution
-RUN conda run -n TradeMaster pip install --upgrade pip setuptools wheel && \
-    conda run -n TradeMaster pip install --no-build-isolation gym==0.21.0 optuna
-
+#RUN conda run -n TradeMaster pip install --upgrade pip setuptools wheel && \
+#    conda run -n TradeMaster pip install --no-build-isolation gym==0.21.0 optuna
+RUN conda run -n TradeMaster pip install --find-links https://pypi.org/simple gym==0.26.2
 # Verify Gym Installation
 RUN conda run -n TradeMaster python -c "import gym; print('Gym Version:', gym.__version__)"
 
