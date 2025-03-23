@@ -49,12 +49,12 @@ RUN conda run -n TradeMaster pip install packaging
 RUN conda run -n TradeMaster pip install -v --no-cache-dir --no-build-isolation .
 
 # Install gym .26.2
-RUN conda run -n TradeMaster pip install --find-links https://pypi.org/simple gym==0.26.2
+#RUN conda run -n TradeMaster pip install --find-links https://pypi.org/simple gym==0.26.2
 # Verify Gym Installation
 RUN conda run -n TradeMaster python -c "import gym; print('Gym Version:', gym.__version__)"
 
 #install optuna directly
-RUN conda run -n TradeMaster pip install optuna
+#RUN conda run -n TradeMaster pip install optuna
 # Verify optuna installed
 RUN conda run -n TradeMaster python -c "import optuna; print('optuna Version:', optuna.__version__)"
 
