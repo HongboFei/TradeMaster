@@ -60,7 +60,7 @@ RUN conda run -n TradeMaster python -c "import optuna; print('optuna Version:', 
 
 #install Ray directly
 #RUN conda run -n TradeMaster pip install ray[rllib]
-RUN conda run -n TradeMaster pip install "sympy==1.13.1" "ray[rllib]"
+RUN conda run -n TradeMaster pip install "sympy==1.13.1" "ray[rllib]==2.44.0"
 RUN conda run -n TradeMaster python -c "import ray; print('ray Version:', ray.__version__)"
 
 
