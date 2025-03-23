@@ -1,9 +1,5 @@
 Flask
 Flask-Cors
-mmcv==2.2.0
-gym==0.26.2
-optuna==4.2.1 
-ray[rllib]==2.44.0
 prettytable
 plotly
 psutil

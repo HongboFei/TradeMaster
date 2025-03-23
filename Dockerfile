@@ -49,20 +49,23 @@ RUN conda run -n TradeMaster pip install packaging
 RUN conda run -n TradeMaster pip install -v --no-cache-dir --no-build-isolation .
 
 # Install gym 0.26.2
-#RUN conda run -n TradeMaster pip install --find-links https://pypi.org/simple gym==0.26.2
+RUN conda run -n TradeMaster pip install --find-links https://pypi.org/simple gym==0.26.2
 # Verify Gym Installation
-#RUN conda run -n TradeMaster python -c "import gym; print('Gym Version:', gym.__version__)"
+RUN conda run -n TradeMaster python -c "import gym; print('Gym Version:', gym.__version__)"
 
 #install optuna directly
-#RUN conda run -n TradeMaster pip install optuna
+RUN conda run -n TradeMaster pip install optuna
 # Verify optuna installed
-#RUN conda run -n TradeMaster python -c "import optuna; print('optuna Version:', optuna.__version__)"
+RUN conda run -n TradeMaster python -c "import optuna; print('optuna Version:', optuna.__version__)"
 
 #install Ray directly
 #RUN conda run -n TradeMaster pip install ray[rllib]
-#RUN conda run -n TradeMaster pip install "sympy==1.13.1" "ray[rllib]==2.44.0"
-#RUN conda run -n TradeMaster python -c "import ray; print('ray Version:', ray.__version__)"
+RUN conda run -n TradeMaster pip install "sympy==1.13.1" "ray[rllib]==2.44.0"
+RUN conda run -n TradeMaster python -c "import ray; print('ray Version:', ray.__version__)"
 
+#install mmcv directly
+RUN conda run -n TradeMaster pip install mmcv==2.2.0
+RUN conda run -n TradeMaster python -c "import mmcv; print('mmcv Version:', mmcv.__version__)"
 
 # Install TradeMaster dependencies
 WORKDIR /home/TradeMaster
