@@ -15,7 +15,7 @@ statsmodels
 scikit_learn
 tslearn
 gymnasium
-ray[rllib]==1.13.0
+ray[rllib]
 tensorflow==2.11.0
 packaging
 kaleido==0.1.0
