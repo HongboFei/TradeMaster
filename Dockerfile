@@ -42,9 +42,11 @@ WORKDIR /home/TradeMaster
 #     conda run -n TradeMaster pip install --find-links https://pypi.org/simple gym==0.26.2 optuna ray[rllib]==2.44.0 && \
 #     conda run -n TradeMaster pip install mmcv==2.2.0 && \
 #     conda run -n TradeMaster pip install -r requirements.txt
-RUN conda run -n TradeMaster pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113 && \
-    conda run -n TradeMaster pip install -r requirements.txt
+# RUN conda run -n TradeMaster pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113 && \
+#    conda run -n TradeMaster pip install -r requirements.txt
 
+RUN conda run -n TradeMaster pip install torch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 && \
+    conda run -n TradeMaster pip install -r requirements.txt
 
 # Clean up unnecessary files to reduce the image size
 RUN conda clean --all -y && \
