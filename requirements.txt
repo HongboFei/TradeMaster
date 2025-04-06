@@ -14,8 +14,7 @@ matplotlib
 statsmodels
 scikit_learn
 tslearn
-setuptools==57.5.0
-gym
+gym==0.26.2
 gymnasium
 ray[rllib]==1.13.0
 tensorflow==2.11.0
