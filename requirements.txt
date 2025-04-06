@@ -14,9 +14,9 @@ matplotlib
 statsmodels
 scikit_learn
 tslearn
-gym
+gym==0.25.2
 gymnasium
-ray[rllib]==2.44.0
+ray[rllib]==1.13.0
 tensorflow==2.11.0
 packaging
 kaleido==0.1.0
