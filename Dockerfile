@@ -16,7 +16,7 @@ ENV PATH="/opt/conda/bin:$PATH"
 
 # Create Conda environment with Python 3.9
 RUN conda update -n base -c defaults conda -y && \
-    conda create --prefix /opt/conda/envs/TradeMaster python=3.10 -y
+    conda create --prefix /opt/conda/envs/TradeMaster python=3.9 -y
 
 # Use bash shell so conda activation works
 SHELL ["/bin/bash", "-c"]
@@ -46,7 +46,7 @@ WORKDIR /home/TradeMaster
 #    conda run -n TradeMaster pip install -r requirements.txt
 
 
-RUN conda run -n TradeMaster pip install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cpuonly -c pytorch
+RUN conda run -n TradeMaster conda install -y pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cpuonly -c pytorch
 RUN conda run -n TradeMaster pip install -r requirements.txt
 
 # handle ray[rllib]==1.13.0 which requires gym==0.21.0 sepeartely. To install gym ==0.21.0. Need "pip<24.1" "setuptools<60" "wheel<0.38"
