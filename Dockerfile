@@ -26,10 +26,12 @@ ENV CONDA_DEFAULT_ENV=TradeMaster
 ENV PATH="/opt/conda/envs/TradeMaster/bin:$PATH"
 
 # Clone TradeMaster repository and switch to 'cpu' branch
-WORKDIR /home
-RUN git clone https://github.com/TradeMaster-NTU/TradeMaster.git && \
-    cd TradeMaster && \
-    git checkout cpu
+#WORKDIR /home
+#RUN git clone https://github.com/TradeMaster-NTU/TradeMaster.git && \
+#    cd TradeMaster && \
+#    git checkout cpu
+
+COPY . /home/TradeMaster
 
 # Set working directory to TradeMaster
 WORKDIR /home/TradeMaster

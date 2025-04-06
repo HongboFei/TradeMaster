@@ -1,6 +1,7 @@
 Flask
 Flask-Cors
 prettytable
+mmcv
 plotly
 psutil
 scipy
