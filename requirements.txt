@@ -1,5 +1,6 @@
 Flask
 Flask-Cors
+mmcv==1.7.1
 prettytable
 plotly
 psutil
@@ -13,10 +14,12 @@ matplotlib
 statsmodels
 scikit_learn
 tslearn
+gym
 gymnasium
+ray[rllib]==1.13.0
 tensorflow==2.11.0
 packaging
-kaleido
+kaleido==0.1.0
 h5py
 pydantic==1.10.2
 jupyter
