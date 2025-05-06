@@ -56,6 +56,8 @@ RUN conda run -n TradeMaster pip install gym==0.21.0
 RUN conda run -n TradeMaster pip install ray[rllib]==1.13.0
 # downgrade yapf version from 0.41.0 to 0.31.0 to fix issue FormatCode(text, style_config=yapf_style, verify=True)
 RUN conda run -n TradeMaster pip install yapf==0.31.0
+# downgrade numpy to 1.24.0
+RUN conda run -n TradeMaster pip install NumPy==1.24.0
 # Clean up unnecessary files to reduce the image size
 RUN conda clean --all -y && \
     rm -rf /home/TradeMaster/.git
