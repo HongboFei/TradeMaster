@@ -51,13 +51,21 @@ RUN conda run -n TradeMaster conda install -y pytorch==1.12.1 torchvision==0.13.
 RUN conda run -n TradeMaster pip install -r requirements.txt
 
 # handle ray[rllib]==1.13.0 which requires gym==0.21.0 sepeartely. To install gym ==0.21.0. Need "pip<24.1" "setuptools<60" "wheel<0.38"
-RUN conda run -n TradeMaster pip install "pip<24.1" "setuptools<60" "wheel<0.38"
-RUN conda run -n TradeMaster pip install gym==0.21.0
-RUN conda run -n TradeMaster pip install ray[rllib]==1.13.0
+#RUN conda run -n TradeMaster pip install "pip<24.1" "setuptools<60" "wheel<0.38"
+#RUN conda run -n TradeMaster pip install gym==0.21.0
+#RUN conda run -n TradeMaster pip install ray[rllib]==1.13.0
 # downgrade yapf version from 0.41.0 to 0.31.0 to fix issue FormatCode(text, style_config=yapf_style, verify=True)
-RUN conda run -n TradeMaster pip install yapf==0.31.0
+#RUN conda run -n TradeMaster pip install yapf==0.31.0
 # downgrade numpy to 1.24.0
-RUN conda run -n TradeMaster pip install NumPy==1.24.0
+#RUN conda run -n TradeMaster pip install NumPy==1.24.0
+
+RUN conda run -n TradeMaster bash -c "\
+    pip install 'pip<24.1' 'setuptools<60' 'wheel<0.38' && \
+    pip install gym==0.21.0 && \
+    pip install 'ray[rllib]==1.13.0' && \
+    pip install yapf==0.31.0 && \
+    pip install numpy==1.24.0"
+
 # Clean up unnecessary files to reduce the image size
 RUN conda clean --all -y && \
     rm -rf /home/TradeMaster/.git
