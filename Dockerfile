@@ -37,7 +37,7 @@ RUN conda run -n TradeMaster conda install -y \
     pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
 
 # Verify PyTorch Installation
-RUN conda run -n TradeMaster python -c "import torch; print('Torch Version:', torch.__version__)"
+# RUN conda run -n TradeMaster python -c "import torch; print('Torch Version:', torch.__version__)"
 
 # Install NVIDIA Apex
 WORKDIR /home
@@ -50,23 +50,23 @@ RUN conda run -n TradeMaster pip install -v --no-cache-dir --no-build-isolation 
 
 #install mmcv directly
 RUN conda run -n TradeMaster pip install mmcv==2.2.0
-RUN conda run -n TradeMaster python -c "import mmcv; print('mmcv Version:', mmcv.__version__)"
+# RUN conda run -n TradeMaster python -c "import mmcv; print('mmcv Version:', mmcv.__version__)"
 
 # Install gym 0.26.2
 RUN conda run -n TradeMaster pip install --find-links https://pypi.org/simple gym==0.26.2
 # Verify Gym Installation
-RUN conda run -n TradeMaster python -c "import gym; print('Gym Version:', gym.__version__)"
+# RUN conda run -n TradeMaster python -c "import gym; print('Gym Version:', gym.__version__)"
 
 #install optuna directly
 RUN conda run -n TradeMaster pip install optuna
 # Verify optuna installed
-RUN conda run -n TradeMaster python -c "import optuna; print('optuna Version:', optuna.__version__)"
+# RUN conda run -n TradeMaster python -c "import optuna; print('optuna Version:', optuna.__version__)"
 
 #install Ray directly
-#RUN conda run -n TradeMaster pip install ray[rllib]
-#RUN conda run -n TradeMaster pip install "sympy==1.13.1" "ray[rllib]==2.44.0"
+# RUN conda run -n TradeMaster pip install ray[rllib]
+# RUN conda run -n TradeMaster pip install "sympy==1.13.1" "ray[rllib]==2.44.0"
 RUN conda run -n TradeMaster pip install ray[rllib]==2.44.0
-RUN conda run -n TradeMaster python -c "import ray; print('ray Version:', ray.__version__)"
+# RUN conda run -n TradeMaster python -c "import ray; print('ray Version:', ray.__version__)"
 
 
 
@@ -74,8 +74,8 @@ RUN conda run -n TradeMaster python -c "import ray; print('ray Version:', ray.__
 WORKDIR /home/TradeMaster
 RUN conda run -n TradeMaster pip install -r requirements.txt
 
-
-
+# downgrade yapf version from 0.41.0 to 0.31.0 to fix issue FormatCode(text, style_config=yapf_style, verify=True)
+RUN conda run -n TradeMaster pip install yapf==0.31.0
 
 
 # Set default working directory
