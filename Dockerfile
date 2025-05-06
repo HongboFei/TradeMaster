@@ -14,9 +14,9 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-instal
 # Set environment variables for Conda
 ENV PATH="/opt/conda/bin:$PATH"
 
-# Create Conda environment with Python 3.9
+# Create Conda environment with Python 3.10
 RUN conda update -n base -c defaults conda -y && \
-    conda create --prefix /opt/conda/envs/TradeMaster python=3.9 -y
+    conda create --prefix /opt/conda/envs/TradeMaster python=3.10 -y
 
 # Use bash shell so conda activation works
 SHELL ["/bin/bash", "-c"]
@@ -26,10 +26,10 @@ ENV CONDA_DEFAULT_ENV=TradeMaster
 ENV PATH="/opt/conda/envs/TradeMaster/bin:$PATH"
 
 # Clone TradeMaster repository and switch to 'cpu' branch
-#WORKDIR /home
-#RUN git clone https://github.com/TradeMaster-NTU/TradeMaster.git && \
-#    cd TradeMaster && \
-#    git checkout cpu
+WORKDIR /home
+RUN git clone https://github.com/TradeMaster-NTU/TradeMaster.git && \
+    cd TradeMaster && \
+    git checkout cpu
 
 COPY . /home/TradeMaster
 
@@ -37,11 +37,12 @@ COPY . /home/TradeMaster
 WORKDIR /home/TradeMaster
 
 # Install all dependencies in one go to reduce layers and optimize caching
-# RUN conda run -n TradeMaster conda install -y \
-#     pytorch torchvision torchaudio cpuonly -c pytorch -c conda-forge && \
-#     conda run -n TradeMaster pip install --find-links https://pypi.org/simple gym==0.26.2 optuna ray[rllib]==2.44.0 && \
-#     conda run -n TradeMaster pip install mmcv==2.2.0 && \
-#     conda run -n TradeMaster pip install -r requirements.txt
+#RUN conda run -n TradeMaster conda install -y \
+#    pytorch torchvision torchaudio cpuonly -c pytorch -c conda-forge && \
+#    conda run -n TradeMaster pip install --find-links https://pypi.org/simple gym==0.26.2 optuna ray[rllib]==2.44.0 && \
+#    conda run -n TradeMaster pip install mmcv==2.2.0 && \
+#    conda run -n TradeMaster pip install -r requirements.txt
+
 # RUN conda run -n TradeMaster pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113 && \
 #    conda run -n TradeMaster pip install -r requirements.txt
 
@@ -53,6 +54,8 @@ RUN conda run -n TradeMaster pip install -r requirements.txt
 RUN conda run -n TradeMaster pip install "pip<24.1" "setuptools<60" "wheel<0.38"
 RUN conda run -n TradeMaster pip install gym==0.21.0
 RUN conda run -n TradeMaster pip install ray[rllib]==1.13.0
+# downgrade yapf version from 0.41.0 to 0.31.0 to fix issue FormatCode(text, style_config=yapf_style, verify=True)
+RUN conda run -n TradeMaster pip install yapf==0.31.0
 # Clean up unnecessary files to reduce the image size
 RUN conda clean --all -y && \
     rm -rf /home/TradeMaster/.git
